@@ -1,0 +1,35 @@
+{
+  "name": "pb-design-system",
+  "description": "Design System Bower",
+  "version": "4.1.2",
+  "homepage": "https://github.com/PBGUX/bower-designsystem",
+  "authors": [
+    "danielcollette <daniel.collette@pb.com>",
+    "stevelombard <steve.lombardi@pb.com>",
+    "nickroberts <nick.roberts@pb.com>"
+  ],
+  "main": [
+    "dist/css/design_system.css",
+    "dist/js/pb.ds.components.js"
+  ],
+  "license": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.7"
+  },
+  "_release": "4.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v4.1.2",
+    "commit": "7d079635a4f88b7577f8f9de0ea38bed3a4105ef"
+  },
+  "_source": "https://github.com/PBGUX/bower-designsystem.git",
+  "_target": "~4.1.0",
+  "_originalSource": "pb-design-system"
+}
