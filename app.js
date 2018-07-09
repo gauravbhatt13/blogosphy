@@ -10,6 +10,5 @@ app.use(express.json());
 app.use('/blogs/login', loginRouter);
 app.use('/blogs/category', blogsCategoryRouter);
 app.use('/blogs', blogsRouter);
-app.use(express.static(path.join(__dirname, 'app')));
-app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use(express.static(path.join(__dirname, 'public')));
 module.exports = app;
