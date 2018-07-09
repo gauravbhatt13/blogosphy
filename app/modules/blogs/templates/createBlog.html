@@ -1,0 +1,51 @@
+<div class="container">
+  <h1>Create Blog</h1>
+  <form autocomplete="off">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="blogTitle">
+            Title
+          </label>
+          <input class="form-control" name="blogTitle" type="text" ng-model="blogCtrl.model.blogTitle" required>
+        </div>
+        <div class="form-group">
+          <label for="blogDescription">
+            Description
+          </label>
+          <textarea class="form-control" name="blogDescription" type="text" ng-model="blogCtrl.model.blogDescription" required>
+        </textarea>
+        </div>
+        <span class="badge">{{blogCtrl.wordCount}} words</span>
+        <span class="badge">{{blogCtrl.charCount}} characters</span>
+        <pbds-transitory-alert is-visible="blogCtrl.isSaved" message="blogCtrl.messages.blogSaved" message-class="'text-success'"></pbds-transitory-alert>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="blogCategory">
+            Category
+          </label>
+          <select class="form-control" aria-label="Dropdown" ng-model="blogCtrl.model.blogCategory">
+            <option value="">Select</option>
+            <option ng-repeat="category in blogCtrl.categories">{{category.categoryName}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <ng-quill-editor name="blogEditor" on-editor-created="blogCtrl.blogCallback(editor)"
+                   style="margin: 50px;" ng-model="blogCtrl.model.blogHTML"
+                   theme="snow"></ng-quill-editor>
+
+
+  <div class="row">
+    <div class="col-md-4">
+      <!--<button class="btn btn-primary" ng-click="blogCtrl.showPreviewModal('Preview', blogCtrl.previewHTML)">Preview</button>-->
+      <button class="btn btn-primary" ng-click="blogCtrl.saveBlog()">Save</button>
+    </div>
+
+  </div>
+</div>
+

@@ -1,0 +1,34 @@
+[ {
+  "name": "Elastic Search",
+  "description": "An open-source full-text search and analytics engine",
+  "image": "modules/home/assets/images/Elasticsearch-Logo-Color-V.png"
+},{
+  "name": "Machine Learning",
+  "description": "The science of getting computers to act without being explicitly programmed.",
+  "image": "modules/home/assets/images/machine learning.jpg"
+},{
+  "name": "Data Structures",
+  "description": "Data organization and storage format",
+  "image": "modules/home/assets/images/data-structures-icon.jpg"
+}, {
+  "name": "Alexa",
+  "description": " Amazon's cloud-based voice service.",
+  "image": "modules/home/assets/images/amazon-alexa-logo-vector-png.png"
+}, {
+  "name": "Nodejs",
+  "description": "An open-source, cross-platform JavaScript run-time environment.",
+  "image": "modules/home/assets/images/nodejs.png"
+}, {
+  "name": "AngularJS",
+  "description": "JavaScript-based open-source front-end web application framework.",
+  "image": "modules/home/assets/images/AngularJS_logo.svg.png"
+}, {
+  "name": "Hack Ideas",
+  "description": "Use latest technologies to provide a hack.",
+  "image": "modules/home/assets/images/hackathon-logo.png"
+}, {
+  "name": "Java",
+  "description": "Use latest technologies to provide a hack.",
+  "image": "modules/home/assets/images/java-logo.png"
+}
+]

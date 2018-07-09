@@ -1,0 +1,45 @@
+<div class="floating-unit">
+
+  <!--<a class="signin-pb-logo" href="http://www.pb.com"></a>-->
+  <div class="signin-box">
+    <h1 class="signin-heading">The Blogs<sup>&trade;</sup></h1>
+
+    <h5 class="signin-subheading">Write your own blogs</h5>
+    <form autocomplete="off" name="myForm" class="spacer-top-md" novalidate>
+      <div class="form-group" ng-class="{'has-error': myForm.name.$error.required  && myForm.name.$dirty}">
+        <label for="name">
+          <span>Email</span>
+        </label>
+        <input class="form-control" name="name" required type="email" ng-model="loginCtrl.model.email">
+      </div>
+      <div class="form-group" ng-class="{'has-error': myForm.pwd.$error.required && myForm.pwd.$dirty}">
+        <label for="pwd">
+          <span>Password</span>
+        </label>
+        <pbds-password-reveal link-show="Show" link-hide="Hide">
+          <input class="form-control" name="pwd" ng-model="loginCtrl.model.pwd" required type="password">
+        </pbds-password-reveal>
+      </div>
+
+      <label class="control checkbox">
+        <input type="checkbox">
+        <span class="control-indicator"></span>
+        <span>Remember me</span>
+      </label>
+
+      <button class="btn btn-primary btn-block btn-lg spacer-top-xs" ng-click="loginCtrl.login()" type="submit" ng-disabled="myForm.$invalid">
+        <span>Sigin in</span>
+      </button>
+    </form>
+
+    <p class="text-center spacer-top-md">
+      <a href="">
+        <span>Forgot Password</span>
+      </a>
+    </p>
+    <p class="text-center">
+      <span>Not registerd?</span>
+      <button class="btn btn-link" ng-click="loginCtrl.signUp()">Sign Up</button>
+    </p>
+  </div>
+</div>

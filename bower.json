@@ -1,0 +1,26 @@
+{
+  "name": "starter-app",
+  "version": "1.6.0",
+  "dependencies": {
+    "angular": "1.5.11",
+    "angular-animate": "1.5.11",
+    "angular-bootstrap": "2.5.0",
+    "angular-cookies": "1.5.11",
+    "angular-loading-bar": "0.9.0",
+    "angular-resource": "1.5.11",
+    "angular-sanitize": "1.5.11",
+    "angular-toastr": "2.1.1",
+    "ui-router": "0.2.18",
+    "pb-design-system": "~4.1.0",
+    "jquery": "2.2.1",
+    "angularjs-dragula": "^2.0.0",
+    "ng-file-upload": "^12.2.13",
+    "angular-base64": "^2.0.5",
+    "slick-carousel": "^1.8.1",
+    "angular-slick-carousel": "^3.1.7"
+  },
+  "devDependencies": {},
+  "resolutions": {
+    "angular": "1.5.11"
+  }
+}

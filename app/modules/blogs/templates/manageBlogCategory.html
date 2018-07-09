@@ -1,0 +1,65 @@
+<div class="container">
+  <h1>Manage blog category</h1>
+  <form autocomplete="off" name="myForm" novalidate>
+  <div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+          <label for="categoryName">
+            Category Name
+          </label>
+          <input class="form-control" name="categoryName" type="text" ng-model="blogCatCtrl.model.categoryName" required>
+        </div>
+        <div class="form-group">
+          <label for="categoryDescription">
+            Category Description
+          </label>
+          <textarea class="form-control" name="categoryDescription" type="text" ng-model="blogCatCtrl.model.categoryDescription" required>
+          </textarea>
+        </div>
+        <div class="form-group">
+          <label for="categoryIcon">
+            Category Icon
+          </label>
+          <img name="categoryIcon" data-ng-src="data:image/png;base64,{{blogCatCtrl.model.categoryImgIcon}}" ng-show="blogCatCtrl.hideDragDrop">
+          <div ngf-drop ngf-select ng-model="blogCatCtrl.dragdrop.files" class="drop-box"
+               ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true" ngf-resize="{width: 300, height: 400}"
+               accept="image/*,application/pdf"
+               ngf-pattern="'image/*'" ng-hide="blogCatCtrl.hideDragDrop">Drag and drop your files here or <a href="">browse</a>.
+          </div>
+
+          <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+        </div>
+        <div class="form-group" style="height: 50px;">
+          <button class="btn btn-primary" ng-click="blogCatCtrl.reset()" ng-disabled="!blogCatCtrl.hideDragDrop">Reset</button>
+          <button class="btn btn-primary" type="submit" ng-click="blogCatCtrl.save()" ng-disabled="!blogCatCtrl.hideDragDrop || myForm.$invalid">Save
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-2">
+    </div>
+    <!--<div class="col-md-6">
+      <div class="form-group">
+        <h2 style="position: relative;left: 60px">
+          Existing Categories
+        </h2>
+        <slick infinite=true slides-to-show=2 slides-to-scroll=2 settings="slickConfig" dots="true">
+          <div class="col-md-4" ng-repeat="category in blogCatCtrl.categories">
+
+            <div class="card card-default category-widget">
+              <div class="card-body category-widget-icon">
+                <img class="img-responsive center-block" data-ng-src="data:image/png;base64,{{category.categoryImgIcon}}">
+              </div>
+              <div class="card-footer">
+                <h4 class="category-widget-title">{{category.categoryName}}</h4>
+                <p class="category-widget-description">
+                  {{category.categoryDescription}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </slick>
+      </div>
+    </div>-->
+  </div>
+</div>

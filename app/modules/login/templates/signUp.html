@@ -1,0 +1,46 @@
+<div class="floating-unit">
+  <!--<a class="signin-pb-logo" href="http://www.pb.com"></a>-->
+
+  <!-- white box -->
+  <div class="signin-box">
+    <form autocomplete="off" name="myForm" class="spacer-top-md" novalidate>
+    <h2 class="text-magenta spacer-top-xs">
+      <span>Welcome</span>
+    </h2>
+    <p>
+      <span>New user</span>
+    </p>
+    <div class="form-group spacer-bottom-sm">
+      <label for="email">
+        <span>Email</span>
+      </label>
+      <input class="form-control" name="email" type="email" ng-model="loginCtrl.model.email" required/>
+    </div>
+    <div class="form-group spacer-bottom-sm">
+      <label for="password">
+        <span>Password</span>
+      </label>
+      <pbds-password-reveal link-show="Show" link-hide="Hide">
+        <input class="form-control" name="password" type="password" ng-model="loginCtrl.model.pwd" required>
+      </pbds-password-reveal>
+    </div>
+    <div class="form-group spacer-bottom-sm">
+      <label for="password2">
+        <span>Confirm Password</span>
+      </label>
+      <pbds-password-reveal link-show="Show" link-hide="Hide">
+        <input class="form-control" name="password2" type="password" ng-model="loginCtrl.myForm.data.cnfPwd" required>
+      </pbds-password-reveal>
+    </div>
+    <label class="control checkbox">
+      <input type="checkbox">
+      <span class="control-indicator"></span>
+      <span>Agree to terms</span>
+    </label>
+    <button class="btn btn-primary btn-block btn-lg" ng-click="loginCtrl.completeRegistration()" type="submit" ng-disabled="myForm.$invalid">
+      <span>Complete my registration</span>
+    </button>
+    </form>
+  </div>
+  <!-- // end white box -->
+</div>

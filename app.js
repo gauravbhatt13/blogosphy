@@ -1,0 +1,14 @@
+var express = require('express');
+var app = express();
+var path = require('path');
+var bodyParser = require('body-parser');
+var loginRouter = require('./routes/login');
+var blogsCategoryRouter = require('./routes/blogsCategory');
+var blogsRouter = require('./routes/blogs');
+app.use(bodyParser.json({type: 'application/*+json'}));
+app.use(express.json());
+app.use('/blogs/login', loginRouter);
+app.use('/blogs/category', blogsCategoryRouter);
+app.use('/blogs', blogsRouter);
+app.use(express.static(path.join(__dirname, 'app')));
+module.exports = app;

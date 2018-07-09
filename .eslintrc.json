@@ -1,0 +1,21 @@
+{
+    "env": {
+      "browser": true
+    },
+    "extends": "semistandard",
+    "plugins": [
+        "standard","angular"
+    ],
+    "globals": {
+      "angular": true,
+      "$": true,
+      "app": true
+    },
+    "rules": {
+      "no-trailing-spaces": ["error", { "skipBlankLines": true }],
+      "no-multiple-empty-lines": ["error", {"max": 3}],
+      "no-unused-vars": [0, {"vars": "all", "args": "after-used"}],
+      "padded-blocks": 0
+
+    }
+}
