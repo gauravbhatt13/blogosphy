@@ -1,7 +1,7 @@
 const elasticsearch = require('elasticsearch');
 const typeSuffix = '_type';
 const client = new elasticsearch.Client({
-  host: 'localhost:9201',
+  host: 'https://j6kqp1mxtz:f0lqra40ea@dogwood-2836663.us-east-1.bonsaisearch.net',
   log: 'trace'
 });
 
