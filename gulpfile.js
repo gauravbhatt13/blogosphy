@@ -18,8 +18,8 @@ var gulp       = require('gulp'),
   nodemon      = require('gulp-nodemon');
 
 
-var sassFiles = './app/assets/sass/**/*.{scss,sass}';
-var cssFiles = './app/assets/css';
+var sassFiles = './public/assets/sass/**/*.{scss,sass}';
+var cssFiles = './public/assets/css';
 var cssBuildFiles = './build/assets/css';
 var sassOptions = {
   errLogToConsole: true,
@@ -57,7 +57,7 @@ gulp.task('sass-build', function () {
 
 //usemin
 gulp.task('usemin', function() {
-  gulp.src('./app/index.html')
+  gulp.src('./public/index.html')
     .pipe(usemin({
       css: [minifyCss, rev],
       vendorjs: [uglify({
@@ -83,8 +83,8 @@ gulp.task('usemin', function() {
 //copy modules
 gulp.task('copy:modules', [], function() {
   gulp.src([
-      './app/modules/**/*.*',
-      '!./app/modules/**/*.js'
+      './public/modules/**/*.*',
+      '!./public/modules/**/*.js'
     ])
     .pipe(gulp.dest('./build/modules'));
 });
@@ -93,7 +93,7 @@ gulp.task('copy:modules', [], function() {
 //copy core data json
 gulp.task('copy:json-core-data', [], function() {
   gulp.src([
-      './app/core/data/**/*.json'
+      './public/core/data/**/*.json'
     ])
     .pipe(gulp.dest('./build/core/data/'));
 });
@@ -102,9 +102,9 @@ gulp.task('copy:json-core-data', [], function() {
 //copy fonts
 gulp.task('copy:fonts', [], function() {
   gulp.src([
-      './app/assets/fonts/*',
-      './app/bower_components/bootstrap/dist/fonts/*',
-      './app/bower_components/pb-design-system/dist/fonts/*',
+      './public/assets/fonts/*',
+      './public/bower_components/bootstrap/dist/fonts/*',
+      './public/bower_components/pb-design-system/dist/fonts/*',
     ])
     .pipe(gulp.dest('./build/assets/fonts'));
 });
@@ -113,7 +113,7 @@ gulp.task('copy:fonts', [], function() {
 //copy images
 gulp.task('copy:images', [], function() {
   gulp.src([
-      './app/assets/images/**/*'
+      './public/assets/images/**/*'
     ])
     .pipe(gulp.dest('./build/assets/images'));
 });
@@ -123,12 +123,12 @@ gulp.task('copy:vendor-dev', [], function() {
   gulp.src([
     './node_modules/ng-quill/dist/*'
   ])
-    .pipe(gulp.dest('./app/vendor/ng-quill'))
+    .pipe(gulp.dest('./public/vendor/ng-quill'))
 
   gulp.src([
     './node_modules/quill/dist/**/*'
   ])
-    .pipe(gulp.dest('./app/vendor/quill'));
+    .pipe(gulp.dest('./public/vendor/quill'));
 });
 
 //copy vendor build
@@ -181,9 +181,9 @@ gulp.task('default', ['watch'], function() {});
 
 // Watch
 gulp.task('watch', ['browser-sync', 'copy:vendor-dev'], function() {
-  gulp.watch(['app/assets/sass/**/*.scss', 'app/modules/**/*.scss'], {interval: 500}, ['sass']);
-  gulp.watch(['app/core/**/*.js', 'app/modules/**/*.js', 'app/core/**/*.json'], {interval: 500}, reload);
-  gulp.watch(['app/core/**/*.html', 'app/modules/**/*.html'], {interval: 500}, reload);
+  gulp.watch(['public/assets/sass/**/*.scss', 'public/modules/**/*.scss'], {interval: 500}, ['sass']);
+  gulp.watch(['public/core/**/*.js', 'public/modules/**/*.js', 'public/core/**/*.json'], {interval: 500}, reload);
+  gulp.watch(['public/core/**/*.html', 'public/modules/**/*.html'], {interval: 500}, reload);
 });
 
 gulp.task('nodemon', function (cb) {
