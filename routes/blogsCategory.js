@@ -21,6 +21,7 @@ router.delete('/', function (req, res, next) {
 async function deleteCategory (res, category) {
   console.log('category received' + category.categoryName);
   esClient.deleteEntity(blogCatIndexName, category, blogCatPrimaryKey);
+  res.send({code: 1});
 }
 async function manageBlogCategory (res, data) {
   const exists = await esClient.exists(blogCatIndexName, data, blogCatPrimaryKey);

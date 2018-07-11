@@ -16,8 +16,8 @@
           <textarea class="form-control" name="blogDescription" type="text" ng-model="blogCtrl.model.blogDescription" required>
         </textarea>
         </div>
-        <span class="badge">{{blogCtrl.wordCount}} words</span>
-        <span class="badge">{{blogCtrl.charCount}} characters</span>
+        <span class="badge">{{blogCtrl.model.wordCount}} words</span>
+        <span class="badge">{{blogCtrl.model.charCount}} characters</span>
         <pbds-transitory-alert is-visible="blogCtrl.isSaved" message="blogCtrl.messages.blogSaved" message-class="'text-success'"></pbds-transitory-alert>
       </div>
       <div class="col-md-6">

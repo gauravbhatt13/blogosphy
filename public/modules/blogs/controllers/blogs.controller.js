@@ -25,41 +25,40 @@
   // Show Blog Controller
   angular.module('blogs').controller('ShowBlogController', function (blogData) {
     var _this = this;
-    _this.blogTitle = blogData.blogTitle;
-    _this.previewHTML = blogData.blogHTML;
+    var monthNames = [
+      'January', 'February', 'March',
+      'April', 'May', 'June', 'July',
+      'August', 'September', 'October',
+      'November', 'December'
+    ];
+    _this.blogData = blogData;
+    var newDate = new Date(_this.blogData.dateOfCreation);
+    console.log(newDate + ':' + Date.parse(newDate));
+    var day = newDate.getDate();
+    var monthIndex = newDate.getMonth();
+    var year = newDate.getFullYear();
+    _this.parsedDate = day + ' ' + monthNames[monthIndex] + ' ' + year;
   });
   // Blogs Controller
-  angular.module('blogs').controller('BlogsController', function (categories, $uibModal, $scope, blogsService, loginService) {
+  angular.module('blogs').controller('BlogsController', function (categories, $uibModal, $scope, blogsService, loginService, $stateParams) {
     console.log('blogs controller initialized');
     var _this = this;
+    _this.blog = $stateParams.blog;
     _this.isSaved = false;
-    _this.model = {blogTitle: '', blogCategory: '', blogDescription: '', blogHTML: '', userEmail: ''};
+    _this.model = {blogTitle: '', blogCategory: '', blogDescription: '', blogHTML: '', userEmail: '', wordCount: 0, charCount: 0, dateOfCreation: ''};
+    if (_this.blog !== undefined) {
+      _this.model = _this.blog;
+    }
     _this.messages = {blogSaved: 'Blog saved successfully'};
-    _this.showPreviewModal = function (heading, previewHTML) {
-      $uibModal.open({
-        templateUrl: '/modules/blogs/templates/previewModal.html',
-        controller: 'PreviewModalController',
-        controllerAs: '$ctrl',
-        resolve: {
-          heading: function () {
-            return heading;
-          },
-          previewHTML: function () {
-            return previewHTML;
-          }
-        }
-      });
 
-    };
     _this.categories = categories;
-    _this.wordCount = 0;
-    _this.charCount = 0;
     // on-content-changed="blogCtrl.blogContentChangedCallback(editor, html, text, content, delta, oldDelta, source)"
     _this.blogContentChangedCallback = function (editor, html, text, content, delta, oldDelta, source) {
       console.log(delta);
     };
     _this.saveBlog = function () {
       _this.model.userEmail = loginService.getCurrentUser().email;
+      _this.model.dateOfCreation = new Date();
       blogsService.saveBlog(_this.model).then(function (data, err) {
         if (err) {
 
@@ -73,22 +72,29 @@
     };
     _this.blogCallback = function (editor) {
       editor.on('text-change', function () {
-        var text = editor.getText();
-        var regex = /\s+/gi;
-        var wordCount = text.trim().replace(regex, ' ').split(' ').length;
-        var totalChars = text.length;
-        var charCount = text.trim().length;
-        var charCountNoSpace = text.replace(regex, '').length;
-        _this.wordCount = wordCount;
-        _this.charCount = charCountNoSpace;
+        var wordCharCounter = _this.getWordAndCharCount(editor.getText());
+        _this.model.wordCount = wordCharCounter.wordCount;
+        _this.model.charCount = wordCharCounter.charCount;
       });
     };
     _this.previewHTML = undefined;
-
+    _this.getWordAndCharCount = function (text) {
+      var regex = /\s+/gi;
+      var wordCount = text.trim().replace(regex, ' ').split(' ').length;
+      var totalChars = text.length;
+      var charCount = text.trim().length;
+      var charCountNoSpace = text.replace(regex, '').length;
+      return {
+        wordCount: wordCount,
+        charCount: charCount,
+        charCountNoSpace: charCountNoSpace
+      }
+    };
     _this.preview = function () {
 
     };
   });
+
 
   // Blogs Category Controller
   angular.module('blogs').controller('ManageBlogCategoryCtrl', function ($state, $scope, $uibModal, blogsService, categories) {

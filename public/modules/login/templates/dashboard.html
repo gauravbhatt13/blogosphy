@@ -14,14 +14,56 @@
       </div>
     </div>
     <div class="col-md-10">
-      <uib-accordion close-others="dashCtrl.graybgOneAtATime">
-        <!-- <div uib-accordion-group heading="Static Header" is-open="home.accordionGraybg.isFirstOpen" is-disabled="home.accordionGraybg.isFirstDisabled">
-           Content...
-         </div>-->
-        <div uib-accordion-group heading="{{group.title}}" ng-repeat="group in dashCtrl.groups" is-open="false">
-          {{group.content}} <button class="btn btn-primary btn-xs" ng-click="dashCtrl.readMore(group.title)">Read More..</button>
+      <div class="toolbar">
+        <!-- immediate child items must be block items, like divs-->
+        <div class="toolbar-left">
+          <button class="btn btn-link" type="button" aria-label="Add" ng-click="dashCtrl.createBlog()">
+            <i class="nc-icon-mini ui-1_simple-add"></i>
+          </button>
+
+
+
+          <button class="btn btn-link" type="button" aria-label="Delete" ng-click="dashCtrl.deleteBlog()">
+            <i class="nc-icon-mini ui-1_trash-simple"></i>
+          </button>
+
+
+          <button class="btn btn-link" type="button" aria-label="Edit" ng-click="dashCtrl.editBlog()">
+            <i class="nc-icon-mini ui-1_pencil"></i>
+          </button>
         </div>
-      </uib-accordion>
+
+        <div class="toolbar-right">
+          <!-- add an empty div for flexbox spacing end-to-end-->
+        </div>
+
+      </div>
+
+      <table class="table">
+        <thead>
+        <tr>
+          <td style="width: 10%">
+            <input type="checkbox"
+                   ng-model="dashCtrl.table.allRowsSelected"
+                   ng-click="dashCtrl.table.selectAllRows()"  aria-label="Select All" >
+          </td>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="d in dashCtrl.table.data | orderBy: dashCtrl.table.sort.type:dashCtrl.table.sort.reverse"
+            ng-class="{'table-row-selected': d.selected}">
+          <td>
+            <input type="checkbox"
+                   ng-model="d.selected"
+                   ng-click="dashCtrl.table.selectRow(d, $event)" aria-label="{{::d.full_name}}">
+          </td>
+          <td>{{d.blogTitle}}</td>
+          <td>{{d.blogDescription}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

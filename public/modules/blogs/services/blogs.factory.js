@@ -77,6 +77,23 @@
         });
         return $q.all(promises);
       },
+      deleteBlog: function (data) {
+        var promises = [];
+        var deferred = $q.defer();
+        angular.forEach(data, function (blog) {
+          var promise = $http({
+            url: '/blogs',
+            method: 'DELETE',
+            data: {blogTitle: blog},
+            headers: {
+              'Content-type': 'application/json;charset=utf-8'
+            }
+          });
+          promises.push(promise);
+
+        });
+        return $q.all(promises);
+      },
       getBlogsByUser: function (data) {
         var deferred = $q.defer();
 

@@ -64,34 +64,16 @@
         }
       }
     });
-    $stateProvider.state('blogs', {
-      url: '/blogs',
-      data: {
-        pageTitle: 'Home',
-        access: 'private',
-        bodyClass: 'home'
-      },
-      views: {
-        'header': {
-          controller: 'HeaderController as header',
-          templateUrl: 'modules/main/templates/header.html'
-        },
-        'content': {
-          controller: 'BlogsController as blogCtrl',
-          templateUrl: 'modules/blogs/templates/blogs.html'
-        },
-        'footer': {
-          controller: 'FooterController as footer',
-          templateUrl: 'modules/main/templates/footer.html'
-        }
-      }
-    });
+
     $stateProvider.state('createBlog', {
       url: '/createBlog',
       resolve: {
         categories: function (blogsService) {
           return blogsService.getCategories();
         }
+      },
+      params: {
+        'blog': ''
       },
       data: {
         pageTitle: 'Create Blog',

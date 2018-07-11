@@ -45,15 +45,6 @@
             <li>
               <a href="" ng-click="header.manageBlogCategory()">Manage Blog Category</a>
             </li>
-            <li>
-              <a href="" ng-click="header.createBlog()">Create Blog</a>
-            </li>
-            <li>
-              <a href="">Edit Blog</a>
-            </li>
-            <li>
-              <a href="">Remove Blog</a>
-            </li>
           </ul>
         </li ng-if>
 
@@ -62,7 +53,7 @@
           <a href="" class="dropdown-toggle face" data-toggle="dropdown" aria-labelledby="username-offscreen" aria-expanded="false">
 
             <!-- user initials -->
-            <span class="hidden-lg hidden-xs">
+            <!--<span class="hidden-lg hidden-xs">
               <svg width="40" height="24" viewBox="0 0 40 24">
                 <g id="svgUserInitials" fill="none"><path d="M1 12c0-6.075 4.925-11 11-11s11 4.925 11 11-4.925 11-11 11-11-4.925-11-11z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                   <text font-family="sans-serif" font-size="10" font-weight="normal" text-anchor="middle" fill="#fff">
@@ -71,15 +62,18 @@
                 </g>
                 <g transform="translate(28,3)"><circle cx="3" cy="3" r="6" fill="#FFFFFF"></circle></g>
               </svg>
-            </span>
+            </span>-->
 
             <!-- for the mobile menu only -->
-            <span class="visible-xs-inline header-username-xs" id="username-offscreen">
+            <!--<span class="visible-xs-inline header-username-xs" id="username-offscreen">
                 <i class="nc-icon-mini users_circle-10"></i>Melanie Daniels
-              </span>
+              </span>-->
 
             <!-- full name with notification number -->
-            <span class="hidden-xs hidden-sm hidden-md">
+           <!-- <span class="hidden-xs hidden-sm hidden-md">
+              <span class="header-username">{{header.email}}</span>
+            </span>-->
+            <span>
               <span class="header-username">{{header.email}}</span>
             </span>
 
@@ -87,11 +81,6 @@
 
           <!-- user drop-menu -->
           <ul class="dropdown-menu" role="menu">
-            <li>
-              <a href="">Profile<br>
-                  <span class="menu-text-small">Email, Passwords</span>
-                </a>
-            </li>
             <li>
               <a href="" ng-click="header.showDashboard()">Dashboard<br>
                   <span class="menu-text-small">Blogs, Views, Comments</span>

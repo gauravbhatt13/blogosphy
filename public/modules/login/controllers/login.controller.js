@@ -74,26 +74,87 @@
     };
   });
 
-  angular.module('login').controller('DashBoardController', function ($state, blogs, loginService) {
+  angular.module('login').controller('DashBoardController', function ($state, blogs, loginService, blogsService) {
     var _this = this;
     if (loginService.getCurrentUser() === undefined) {
       $state.go('login');
     } else {
+      _this.editBlog = function () {
+        _this.blogs.filter(function (blog) {
+          if (blog.blogTitle === _this.table.selectedRows[0]) {
+            $state.go('createBlog', {blog: blog});
+          }
+        });
+      };
 
+      _this.deleteBlog = function () {
+        blogsService.deleteBlog(_this.table.selectedRows).then(function (data, err) {
+          if (err) {
+            setTimeout(function () {
+              $state.go($state.current, {}, {reload: true});
+            }, 1000);
+          } else {
+            setTimeout(function () {
+              $state.go($state.current, {}, {reload: true});
+            }, 1000);
+          }
+        });
+      };
+      _this.createBlog = function () {
+        $state.go('createBlog');
+      };
+      _this.blogs = blogs;
+      _this.table = {
+        data: _this.blogs,
+        sort: {
+          type: 'full_name',
+          reverse: false,
+          change: function (key) {
+            _this.table.sort.type = key;
+            _this.table.sort.reverse = !_this.table.sort.reverse;
+          }
+        },
+        selectedRows: [],
+        selectRow: function (data, $event) {
+          $event.stopPropagation();
+
+          if (_this.table.selectedRows.indexOf(data.blogTitle) === -1) {
+            _this.table.selectedRows.push(data.blogTitle);
+            data.selected = true;
+          } else {
+            _this.table.selectedRows.splice(_this.table.selectedRows.indexOf(data.blogTitle), 1);
+            _this.table.allRowsSelected = false;
+            data.selected = false;
+          }
+        },
+        selectAllRows: function () {
+          var checked = !_this.table.selectAllFilteredRows();
+
+          _this.table.selectedRows = [];
+
+          angular.forEach(_this.table.data, function (value, key) {
+            value.selected = checked;
+
+            if (checked) {
+              _this.table.selectedRows.push(value.blogTitle);
+            }
+          });
+        },
+        selectAllFilteredRows: function () {
+          var selected = 0;
+
+          angular.forEach(_this.table.data, function (value, key) {
+            if (value.selected) {
+              selected++;
+            }
+          });
+
+          return (selected !== 0 && selected === _this.table.data.length);
+        }
+
+      };
       _this.blogCount = blogs.length;
-      _this.data = blogs;
-      _this.groups = [];
-      _this.readMore = function (blogTitle) {
-        console.log('setting blogTitle: ' + blogTitle);
-        $state.go('showBlog', {blogTitle: blogTitle}, undefined);
-      };
-      _this.data.forEach(function (item) {
-        _this.groups.push({title: item.blogTitle, content: item.blogDescription});
-      });
-      _this.accordionGraybg = {
-        isFirstOpen: true,
-        isFirstDisabled: false
-      };
+
     }
   });
 })();

@@ -23,6 +23,15 @@ router.get('/', function (req, res, next) {
   getBlog(res, req.query.blogTitle);
 });
 
+router.delete('/', function (req, res, next) {
+  deleteBlog(res, req.body);
+});
+
+async function deleteBlog (res, blog) {
+  console.log('blog received' + blog.blogTitle);
+  esClient.deleteEntity(blogsIndexName, blog, blogsPrimaryKey);
+  res.send({code: 1});
+}
 
 async function getBlogByUser (res, user) {
   const blog = await esClient.getEntityByUser(blogsIndexName, user);
