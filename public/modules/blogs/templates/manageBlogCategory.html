@@ -1,65 +1,53 @@
 <div class="container">
-  <h1>Manage blog category</h1>
-  <form autocomplete="off" name="myForm" novalidate>
+  <h1>Manage Category</h1>
   <div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-          <label for="categoryName">
-            Category Name
-          </label>
-          <input class="form-control" name="categoryName" type="text" ng-model="blogCatCtrl.model.categoryName" required>
-        </div>
-        <div class="form-group">
-          <label for="categoryDescription">
-            Category Description
-          </label>
-          <textarea class="form-control" name="categoryDescription" type="text" ng-model="blogCatCtrl.model.categoryDescription" required>
-          </textarea>
-        </div>
-        <div class="form-group">
-          <label for="categoryIcon">
-            Category Icon
-          </label>
-          <img name="categoryIcon" data-ng-src="data:image/png;base64,{{blogCatCtrl.model.categoryImgIcon}}" ng-show="blogCatCtrl.hideDragDrop">
-          <div ngf-drop ngf-select ng-model="blogCatCtrl.dragdrop.files" class="drop-box"
-               ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true" ngf-resize="{width: 300, height: 400}"
-               accept="image/*,application/pdf"
-               ngf-pattern="'image/*'" ng-hide="blogCatCtrl.hideDragDrop">Drag and drop your files here or <a href="">browse</a>.
-          </div>
+    <div class="toolbar">
+      <!-- immediate child items must be block items, like divs-->
+      <div class="toolbar-left">
+        <button class="btn btn-link" type="button" aria-label="Add" ng-click="blogCatCtrl.createBlogCategoryModal()">
+          <i class="nc-icon-mini ui-1_simple-add"></i>
+        </button>
 
-          <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-        </div>
-        <div class="form-group" style="height: 50px;">
-          <button class="btn btn-primary" ng-click="blogCatCtrl.reset()" ng-disabled="!blogCatCtrl.hideDragDrop">Reset</button>
-          <button class="btn btn-primary" type="submit" ng-click="blogCatCtrl.save()" ng-disabled="!blogCatCtrl.hideDragDrop || myForm.$invalid">Save
-          </button>
-        </div>
-      </form>
-    </div>
-    <div class="col-md-2">
-    </div>
-    <!--<div class="col-md-6">
-      <div class="form-group">
-        <h2 style="position: relative;left: 60px">
-          Existing Categories
-        </h2>
-        <slick infinite=true slides-to-show=2 slides-to-scroll=2 settings="slickConfig" dots="true">
-          <div class="col-md-4" ng-repeat="category in blogCatCtrl.categories">
 
-            <div class="card card-default category-widget">
-              <div class="card-body category-widget-icon">
-                <img class="img-responsive center-block" data-ng-src="data:image/png;base64,{{category.categoryImgIcon}}">
-              </div>
-              <div class="card-footer">
-                <h4 class="category-widget-title">{{category.categoryName}}</h4>
-                <p class="category-widget-description">
-                  {{category.categoryDescription}}
-                </p>
-              </div>
-            </div>
-          </div>
-        </slick>
+
+        <button class="btn btn-link" type="button" aria-label="Delete" ng-click="blogCatCtrl.deleteBlogCategory()">
+          <i class="nc-icon-mini ui-1_trash-simple"></i>
+        </button>
       </div>
-    </div>-->
+
+      <div class="toolbar-right">
+        <!-- add an empty div for flexbox spacing end-to-end-->
+      </div>
+
+    </div>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <td>
+          <input type="checkbox"
+                 ng-model="blogCatCtrl.table.allRowsSelected"
+                 ng-click="blogCatCtrl.table.selectAllRows()"  aria-label="Select All" >
+        </td>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="d in blogCatCtrl.table.data | orderBy: blogCatCtrl.table.sort.type:blogCatCtrl.table.sort.reverse"
+          ng-class="{'table-row-selected': d.selected}">
+        <td>
+          <input type="checkbox"
+                 ng-model="d.selected"
+                 ng-click="blogCatCtrl.table.selectRow(d, $event)" aria-label="{{::d.full_name}}">
+        </td>
+        <td>{{d.categoryName}}</td>
+        <td>{{d.categoryDescription}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+
   </div>
 </div>
+

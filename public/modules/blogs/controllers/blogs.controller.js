@@ -25,16 +25,15 @@
   // Show Blog Controller
   angular.module('blogs').controller('ShowBlogController', function (blogData) {
     var _this = this;
-    console.log(blogData);
     _this.blogTitle = blogData.blogTitle;
     _this.previewHTML = blogData.blogHTML;
   });
   // Blogs Controller
-  angular.module('blogs').controller('BlogsController', function (categories, $uibModal, $scope, blogsService) {
+  angular.module('blogs').controller('BlogsController', function (categories, $uibModal, $scope, blogsService, loginService) {
     console.log('blogs controller initialized');
     var _this = this;
     _this.isSaved = false;
-    _this.model = {blogTitle: '', blogCategory: '', blogDescription: '', blogHTML: ''};
+    _this.model = {blogTitle: '', blogCategory: '', blogDescription: '', blogHTML: '', userEmail: ''};
     _this.messages = {blogSaved: 'Blog saved successfully'};
     _this.showPreviewModal = function (heading, previewHTML) {
       $uibModal.open({
@@ -60,6 +59,7 @@
       console.log(delta);
     };
     _this.saveBlog = function () {
+      _this.model.userEmail = loginService.getCurrentUser().email;
       blogsService.saveBlog(_this.model).then(function (data, err) {
         if (err) {
 
@@ -91,8 +91,103 @@
   });
 
   // Blogs Category Controller
-  angular.module('blogs').controller('BlogsCategoryController', function ($scope, $base64, $uibModal, blogsService, categories) {
+  angular.module('blogs').controller('ManageBlogCategoryCtrl', function ($state, $scope, $uibModal, blogsService, categories) {
     var _this = this;
+    _this.deleteBlogCategory = function () {
+      blogsService.deleteBlogCategory(_this.table.selectedRows).then(function (data, err) {
+        if (err) {
+          setTimeout(function () {
+            $state.go($state.current, {}, {reload: true});
+          }, 1000);
+        } else {
+          setTimeout(function () {
+            $state.go($state.current, {}, {reload: true});
+          }, 1000);
+        }
+      });
+    };
+
+    _this.createBlogCategoryModal = function () {
+      $uibModal.open({
+        templateUrl: '/modules/blogs/templates/createBlogCategoryModal.html',
+        controller: 'CreateBlogCatModalCtrl',
+        controllerAs: 'createBlogCtrl'
+      }).closed.then(function () {
+        setTimeout(function () {
+          $state.go($state.current, {}, {reload: true});
+        }, 1000);
+      });
+    };
+    _this.categories = categories;
+    _this.table = {
+      data: _this.categories,
+      sort: {
+        type: 'full_name',
+        reverse: false,
+        change: function (key) {
+          _this.table.sort.type = key;
+          _this.table.sort.reverse = !_this.table.sort.reverse;
+        }
+      },
+      selectedRows: [],
+      selectRow: function (data, $event) {
+        $event.stopPropagation();
+
+        if (_this.table.selectedRows.indexOf(data.categoryName) === -1) {
+          _this.table.selectedRows.push(data.categoryName);
+          data.selected = true;
+        } else {
+          _this.table.selectedRows.splice(_this.table.selectedRows.indexOf(data.categoryName), 1);
+          _this.table.allRowsSelected = false;
+          data.selected = false;
+        }
+      },
+      selectAllRows: function () {
+        var checked = !_this.table.selectAllFilteredRows();
+
+        _this.table.selectedRows = [];
+
+        angular.forEach(_this.table.data, function (value, key) {
+          value.selected = checked;
+
+          if (checked) {
+            _this.table.selectedRows.push(value.categoryName);
+          }
+        });
+      },
+      selectAllFilteredRows: function () {
+        var selected = 0;
+
+        angular.forEach(_this.table.data, function (value, key) {
+          if (value.selected) {
+            selected++;
+          }
+        });
+
+        return (selected !== 0 && selected === _this.table.data.length);
+      }
+
+    };
+
+    _this.slickConfig = {
+      enabled: true,
+      autoplay: true,
+      draggable: false,
+      autoplaySpeed: 3000,
+      method: {},
+      event: {
+        beforeChange: function (event, slick, currentSlide, nextSlide) {
+        },
+        afterChange: function (event, slick, currentSlide, nextSlide) {
+        }
+      }
+    };
+  });
+
+  angular.module('blogs').controller('CreateBlogCatModalCtrl', function ($scope, blogsService, $state, $uibModal, $base64, $uibModalInstance) {
+    var _this = this;
+    _this.model = {categoryName: '', categoryDescription: ''};
+
     _this.showModal = function (heading, message) {
       $uibModal.open({
         templateUrl: '/modules/blogs/templates/blogModal.html',
@@ -109,8 +204,6 @@
       });
 
     };
-    _this.categories = categories;
-    _this.model = {categoryName: '', categoryDescription: '', categoryImgIcon: ''};
     _this.dragdrop = {files: []};
     $scope.$watch('blogCatCtrl.dragdrop.files', function () {
       _this.upload(_this.dragdrop.files);
@@ -124,7 +217,7 @@
           if (!file.$error) {
             var reader = new FileReader();
             reader.onload = function () {
-              _this.model.categoryImgIcon = $base64.encode(reader.result);
+              // _this.model.categoryImgIcon = $base64.encode(reader.result);
               _this.hideDragDrop = true;
               $scope.$apply();
             };
@@ -134,32 +227,18 @@
       }
     };
     _this.reset = function () {
-      _this.model = {categoryName: '', categoryDescription: '', categoryImgIcon: ''};
+      _this.model = {categoryName: '', categoryDescription: ''};
       _this.hideDragDrop = false;
       _this.dragdrop = {files: []};
     };
     _this.save = function () {
       blogsService.saveCategory(_this.model).then(function (data, err) {
         if (err) {
-          _this.showModal('Blog Category', 'Error creating blog category');
+
         } else {
-          _this.showModal('Blog Category', 'Blog category created.');
-          _this.reset();
+          $uibModalInstance.close();
         }
       });
-    };
-    _this.slickConfig = {
-      enabled: true,
-      autoplay: true,
-      draggable: false,
-      autoplaySpeed: 3000,
-      method: {},
-      event: {
-        beforeChange: function (event, slick, currentSlide, nextSlide) {
-        },
-        afterChange: function (event, slick, currentSlide, nextSlide) {
-        }
-      }
     };
   });
 

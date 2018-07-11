@@ -5,6 +5,11 @@ const client = new elasticsearch.Client({
   log: 'trace'
 });
 
+/*const client = new elasticsearch.Client({
+  host: 'localhost:9201',
+  log: 'trace'
+});*/
+
 async function saveEntity (index, entity, primaryKey) {
   const response = client.index({
     index: index,
@@ -23,6 +28,14 @@ async function getEntity (index, entity, primaryKey) {
   return response;
 }
 
+async function getEntityByUser (index, user) {
+  const response = await client.search({
+    index: index,
+    q: 'userEmail:' + user.email
+  });
+  return response;
+}
+
 async function exists (index, entity, primaryKey) {
   const exists = await client.exists({
     index: index,
@@ -32,8 +45,12 @@ async function exists (index, entity, primaryKey) {
   return exists;
 }
 
-async function deleteEntity (index, entity) {
-
+async function deleteEntity (index, entity, primaryKey) {
+  await client.delete({
+    index: index,
+    type: index + typeSuffix,
+    id: entity[primaryKey]
+  });
 }
 
 async function updateEntity (index, entity) {
@@ -58,5 +75,6 @@ module.exports = {
   deleteEntity: deleteEntity,
   updateEntity: updateEntity,
   exists: exists,
-  getAll: getAll
+  getAll: getAll,
+  getEntityByUser: getEntityByUser
 };

@@ -40,6 +40,7 @@ async function registerUser(res, data) {
   if (!exists) {
     console.log('user exists status : ' + exists);
     data.verified = false;
+    data.admin = false;
     esClient.saveEntity(indexName, data, primaryKey);
     res.send({code: 1, user: data});
     console.log('*************user registered*********************');

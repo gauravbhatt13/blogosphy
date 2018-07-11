@@ -1,0 +1,28 @@
+<div class="container">
+  <h1>Dashboard</h1>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-body">
+          <div class="metric-block metric-block-data-increase">
+            <div class="metric-block-data">
+              <div class="metric-block-description">Blogs</div>
+              <div class="metric-block-value">{{dashCtrl.blogCount}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <uib-accordion close-others="dashCtrl.graybgOneAtATime">
+        <!-- <div uib-accordion-group heading="Static Header" is-open="home.accordionGraybg.isFirstOpen" is-disabled="home.accordionGraybg.isFirstDisabled">
+           Content...
+         </div>-->
+        <div uib-accordion-group heading="{{group.title}}" ng-repeat="group in dashCtrl.groups" is-open="false">
+          {{group.content}} <button class="btn btn-primary btn-xs" ng-click="dashCtrl.readMore(group.title)">Read More..</button>
+        </div>
+      </uib-accordion>
+    </div>
+  </div>
+</div>
+

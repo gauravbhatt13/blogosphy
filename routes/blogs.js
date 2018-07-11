@@ -10,6 +10,11 @@ router.post('/', function (req, res, next) {
   createBlog(res, req.body);
 });
 
+router.post('/blogsByUser', function (req, res, next) {
+  console.log('****************get blogs by user request received******************');
+  getBlogByUser(res, req.body);
+});
+
 router.get('/getBlogs', function (req, res, next) {
   getBlogs(res);
 });
@@ -17,6 +22,17 @@ router.get('/getBlogs', function (req, res, next) {
 router.get('/', function (req, res, next) {
   getBlog(res, req.query.blogTitle);
 });
+
+
+async function getBlogByUser (res, user) {
+  const blog = await esClient.getEntityByUser(blogsIndexName, user);
+  var blogsArray = [];
+  blog.hits.hits.forEach(function (blog) {
+    blogsArray.push(blog['_source']);
+  });
+  res.send(blogsArray);
+}
+
 
 async function getBlog (res, blogTitle) {
   const blog = await esClient.getEntity(blogsIndexName, {blogTitle: blogTitle}, blogsPrimaryKey);

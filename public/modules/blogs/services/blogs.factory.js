@@ -59,6 +59,34 @@
           deferred.reject(msg);
         });
         return deferred.promise;
+      },
+      deleteBlogCategory: function (data) {
+        var promises = [];
+        var deferred = $q.defer();
+        angular.forEach(data, function (category) {
+          var promise = $http({
+            url: '/blogs/category/',
+            method: 'DELETE',
+            data: {categoryName: category},
+            headers: {
+              'Content-type': 'application/json;charset=utf-8'
+            }
+          });
+          promises.push(promise);
+
+        });
+        return $q.all(promises);
+      },
+      getBlogsByUser: function (data) {
+        var deferred = $q.defer();
+
+        $http.post('/blogs/blogsByUser', {email: data.email}).success(function (data) {
+          deferred.resolve(data);
+        }).error(function (msg, code) {
+          console.log(code);
+          deferred.reject(msg);
+        });
+        return deferred.promise;
       }
     };
   });

@@ -6,7 +6,7 @@
     $stateProvider.state('home', {
       url: '/home',
       resolve: {
-        blogsCategoryData: function (blogsService) {
+        categories: function (blogsService) {
           return blogsService.getCategories();
         },
         blogsData: function (blogsService) {
@@ -36,7 +36,7 @@
     $stateProvider.state('showBlog', {
       url: '/showBlog?blogTitle',
       resolve: {
-        blogsCategoryData: function (blogsService) {
+        categories: function (blogsService) {
           return blogsService.getCategories();
         },
         blogData: function (blogsService, $stateParams) {
@@ -116,9 +116,6 @@
     $stateProvider.state('manageBlogCategory', {
       url: '/manageBlogCategory',
       resolve: {
-        blogsCategoryData: function (blogsService) {
-          return blogsService.getCategories();
-        },
         categories: function (blogsService) {
           return blogsService.getCategories();
         }
@@ -134,7 +131,7 @@
           templateUrl: 'modules/main/templates/header.html'
         },
         'content': {
-          controller: 'BlogsCategoryController as blogCatCtrl',
+          controller: 'ManageBlogCategoryCtrl as blogCatCtrl',
           templateUrl: 'modules/blogs/templates/manageBlogCategory.html'
         },
         'footer': {

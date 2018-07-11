@@ -1,9 +1,11 @@
 <div class="modal-header">
-  <button type="button" class="close" ng-click="$ctrl.close()"><span aria-hidden="true"></span><span class="sr-only">Close</span></button>
+  <button ng-if="!$ctrl.isOkModal" type="button" class="close" ng-click="$ctrl.close()"><span aria-hidden="true"></span><span class="sr-only">Close</span></button>
   <h2 class="modal-title">{{$ctrl.heading}}</h2>
 </div>
 <div class="modal-body">
 
   <p>{{$ctrl.message}}</p>
-
+  <div class="modal-footer" ng-if="$ctrl.isOkModal">
+    <button type="button" class="btn btn-primary" ng-click="$ctrl.Ok()">Ok</button>
+  </div>
 </div>

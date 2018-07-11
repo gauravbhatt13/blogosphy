@@ -14,6 +14,14 @@ router.get('/getCategories', function (req, res, next) {
   getBlogCategories(res);
 });
 
+router.delete('/', function (req, res, next) {
+  deleteCategory(res, req.body);
+});
+
+async function deleteCategory (res, category) {
+  console.log('category received' + category.categoryName);
+  esClient.deleteEntity(blogCatIndexName, category, blogCatPrimaryKey);
+}
 async function manageBlogCategory (res, data) {
   const exists = await esClient.exists(blogCatIndexName, data, blogCatPrimaryKey);
   if (!exists) {

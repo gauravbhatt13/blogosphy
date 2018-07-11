@@ -29,7 +29,7 @@
       <ul class="nav navbar-nav navbar-right">
 
         <!-- Settings menu -->
-        <li class="dropdown">
+        <li class="dropdown" ng-if="header.isUserAdmin">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-labelledby="settings-offscreen" aria-expanded="false">
             <svg class="hidden-xs" width="24" height="24" viewBox="0 0 24 24">
               <g id="svgSettings" stroke-linecap="round" stroke="#fff" stroke-width="1.5" fill="none">
@@ -54,15 +54,11 @@
             <li>
               <a href="">Remove Blog</a>
             </li>
-            <li class="section-head">Personal Preferences</li>
-            <li>
-              <a href="">Update Profile</a>
-            </li>
           </ul>
-        </li>
+        </li ng-if>
 
         <!-- User menu -->
-        <li class="dropdown menu-user">
+        <li class="dropdown menu-user" ng-if="header.isUserVerified">
           <a href="" class="dropdown-toggle face" data-toggle="dropdown" aria-labelledby="username-offscreen" aria-expanded="false">
 
             <!-- user initials -->
@@ -97,8 +93,8 @@
                 </a>
             </li>
             <li>
-              <a href="">Your Account<br>
-                  <span class="menu-text-small">Financials, Usage, Products, Support</span>
+              <a href="" ng-click="header.showDashboard()">Dashboard<br>
+                  <span class="menu-text-small">Blogs, Views, Comments</span>
                 </a>
             </li>
             <li role="separator" class="divider"></li>
@@ -107,7 +103,12 @@
             </li>
           </ul>
         </li>
-
+        <li>
+          <a href="" ng-if="!header.isUserVerified" ng-click="header.login()">Login</a>
+        </li>
+        <li>
+          <a href="" ng-if="!header.isUserVerified" ng-click="header.signUp()">Sign up</a>
+        </li>
       </ul>
       <!--/navbar-right -->
     </div>
