@@ -57,6 +57,28 @@ async function updateEntity (index, entity) {
 
 }
 
+async function verifyUser (index, verificationCode, primaryKey) {
+  const user = await client.search({
+    index: index,
+    body: {
+      query: {
+        term: {
+          verificationCode: verificationCode
+        }
+      }
+    }
+  });
+  if (user) {
+    user.verified = true;
+    const response = client.index({
+      index: index,
+      type: index + typeSuffix,
+      id: user[primaryKey],
+      body: user
+    });
+  }
+}
+
 async function getAll (index) {
   const response = await client.search({
     index: index,
@@ -76,5 +98,6 @@ module.exports = {
   updateEntity: updateEntity,
   exists: exists,
   getAll: getAll,
-  getEntityByUser: getEntityByUser
+  getEntityByUser: getEntityByUser,
+  verifyUser: verifyUser
 };

@@ -10,6 +10,18 @@
     <p>
       <span>New user</span>
     </p>
+      <div class="form-group spacer-bottom-sm">
+        <label for="firstName">
+          <span>First name</span>
+        </label>
+        <input class="form-control" name="firstName" type="text" ng-model="loginCtrl.model.firstName" required/>
+      </div>
+      <div class="form-group spacer-bottom-sm">
+        <label for="lastName">
+          <span>Last name</span>
+        </label>
+        <input class="form-control" name="lastName" type="text" ng-model="loginCtrl.model.lastName" required/>
+      </div>
     <div class="form-group spacer-bottom-sm">
       <label for="email">
         <span>Email</span>
@@ -32,11 +44,11 @@
         <input class="form-control" name="password2" type="password" ng-model="loginCtrl.myForm.data.cnfPwd" required>
       </pbds-password-reveal>
     </div>
-    <label class="control checkbox">
+    <!--<label class="control checkbox">
       <input type="checkbox">
       <span class="control-indicator"></span>
       <span>Agree to terms</span>
-    </label>
+    </label>-->
     <button class="btn btn-primary btn-block btn-lg" ng-click="loginCtrl.completeRegistration()" type="submit" ng-disabled="myForm.$invalid">
       <span>Complete my registration</span>
     </button>

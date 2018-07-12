@@ -1,6 +1,12 @@
 (function () {
   'use strict';
   angular.module('login').controller('LoginController', function ($state, loginService, $uibModal) {
+    const USER_REGISTERED = 1;
+    const USER_ALREADY_REGISTERED = 2;
+    const USER_NOT_FOUND = 3;
+    const SUCCESS = 4;
+    const INVALID_PASSWORD = 5;
+
     var _this = this;
     _this.showModal = function (heading, message, isOk) {
       $uibModal.open({
@@ -32,10 +38,10 @@
           console.log(err);
         } else {
           console.log(data);
-          if (data.code === 1) {
+          if (data.code === USER_REGISTERED) {
             _this.showModal('User registration', 'Registration email sent to ' + data.user.email + '. It contains a link to ' +
               'verify your identity and complete your registration.', true);
-          } else if (data.code === 2) {
+          } else if (data.code === USER_ALREADY_REGISTERED) {
             _this.showModal('User Registration', 'The email id provided by you is already registered.', false);
           }
         }
@@ -50,9 +56,9 @@
           _this.showModal('Login Failed', 'Error during login', false);
         } else {
           console.log(data);
-          if (data.code === 3) {
+          if ((data.code === USER_NOT_FOUND) || (data.code === INVALID_PASSWORD)) {
             _this.showModal('Login Failed', 'Please provide correct email and password.', false);
-          } else if (data.code === 4) {
+          } else if (data.code === SUCCESS) {
             $state.go('showDashboard');
           }
         }

@@ -2,22 +2,33 @@ const express = require('express');
 const router = express.Router();
 const util = require('util');
 const esClient = require('../modules/esClient');
+var nodemailer = require('nodemailer');
 const indexName = 'users';
 const primaryKey = 'email';
+const USER_REGISTERED = 1;
+const USER_ALREADY_REGISTERED = 2;
+const USER_NOT_FOUND = 3;
+const SUCCESS = 4;
+const INVALID_PASSWORD = 5;
 /* GET home page. */
 router.post('/register', function (req, res, next) {
   console.log('****************register request received*******************');
-  console.log('username : ' + req.body.email);
-  console.log('password : ' + req.body.pwd);
   registerUser(res, req.body);
 });
 
 router.post('/signin', function (req, res, next) {
   console.log('****************signin request received*******************');
-  console.log('username : ' + req.body.email);
-  console.log('password : ' + req.body.pwd);
   getUser(res, req.body);
 });
+
+router.post('/verify/:verificationCode', function (req, res, next) {
+  console.log('****************verify request received*******************');
+  verifyUser(req.params.verificationCode);
+});
+
+async function verifyUser(data) {
+  esClient.verifyUser(indexName, data, primaryKey);
+}
 
 async function getUser(res, data) {
   const users = [];
@@ -26,26 +37,50 @@ async function getUser(res, data) {
   responseQueue.hits.hits.forEach(function (hit) {
     users.push(hit._source);
   });
-
-  console.log('users found : ' + users.length);
   if (users.length === 0) {
-    res.send({code: 3, user: data});
+    res.send({code: USER_NOT_FOUND, user: data});
+  } else if (users[0].verified && users[0].pwd === data.pwd) {
+    res.send({code: SUCCESS, user: users[0]});
   } else {
-    res.send({code: 4, user: users[0]});
+    res.send({code: INVALID_PASSWORD, user: users[0]});
   }
 }
 
 async function registerUser(res, data) {
   const exists = await esClient.exists(indexName, data, primaryKey);
   if (!exists) {
-    console.log('user exists status : ' + exists);
     data.verified = false;
     data.admin = false;
+    var rand = Math.floor((Math.random() * 100) + 54);
+    data.verificationCode = rand;
     esClient.saveEntity(indexName, data, primaryKey);
-    res.send({code: 1, user: data});
-    console.log('*************user registered*********************');
+    var transporter = nodemailer.createTransport({
+      service: 'outlook',
+      auth: {
+        user: 'reviewscan@outlook.com',
+        pass: 'Signin@132'
+      }
+    });
+    var mailOptions = {
+      from: 'reviewscan@outlook.com',
+      to: data.email,
+      subject: 'Verify your blogosphy account',
+      text: 'Please verify your account by clicking on the link\n',
+      html: '<p>Click <a href="https://blogosphy.herokuapp.com/verify/' + data.verificationCode + '">here</a> to verify your account.</p>'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log('message couldnt be sent : ' + error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    res.send({code: USER_REGISTERED, user: data});
+    console.log('*************user registered********************');
   } else {
-    res.send({code: 2, user: data});
+    res.send({code: USER_ALREADY_REGISTERED, user: data});
   }
 }
 
