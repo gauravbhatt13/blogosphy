@@ -28,7 +28,11 @@ router.get('/verify/:verificationCode', function (req, res, next) {
 
 async function verifyUser(res, data) {
   const responseQueue = await esClient.verifyUser(indexName, data, primaryKey);
-  res.send('<p>Thanks for verifying your account. Please login <a href="https://blogosphy.herokuapp.com">Login</a>"</p>');
+  if (responseQueue === 0) {
+    res.send('<p>The link is not valid. Please <a href="https://blogosphy.herokuapp.com">Sign Up</a></p>');
+  } else {
+    res.send('<p>Thanks for verifying your account. Please <a href="https://blogosphy.herokuapp.com">Login</a></p>');
+  }
 }
 
 async function getUser(res, data) {

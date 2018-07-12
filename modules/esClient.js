@@ -69,15 +69,20 @@ async function verifyUser (index, verificationCode, primaryKey) {
     }
   });
   if (result) {
-    var user = result.hits.hits[0]._source;
-    user.verified = true;
-    user.verificationCode = undefined;
-    const response = client.index({
-      index: index,
-      type: index + typeSuffix,
-      id: user[primaryKey],
-      body: user
-    });
+    if (result.hits.hits.length === 0) {
+      return 0;
+    } else {
+      var user = result.hits.hits[0]._source;
+      user.verified = true;
+      user.verificationCode = undefined;
+      const response = client.index({
+        index: index,
+        type: index + typeSuffix,
+        id: user[primaryKey],
+        body: user
+      });
+      return 1;
+    }
   }
 }
 
