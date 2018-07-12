@@ -265,7 +265,7 @@ async function registerUser(res, data) {
       '                            <w:anchorlock/>\n' +
       '                            <center style="color:#ffffff;font-family:sans-serif;font-size:15px;">Verify Email</center>\n' +
       '                          </v:roundrect><![endif]-->\n' +
-      '                            <a href="' + emailURL + '" class="button button--blue">Verify Email</a>\n' +
+      '                            <a href="' + emailURL + '" class="button">Verify Email</a>\n' +
       '                          </div>\n' +
       '                        </td>\n' +
       '                      </tr>\n' +

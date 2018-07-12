@@ -69,7 +69,7 @@ async function verifyUser (index, verificationCode, primaryKey) {
     }
   });
   if (result) {
-    var user = user._source.hits.hits[0];
+    var user = result._source.hits.hits[0];
     user.verified = true;
     user.verificationCode = undefined;
     const response = client.index({
