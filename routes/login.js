@@ -28,7 +28,7 @@ router.get('/verify/:verificationCode', function (req, res, next) {
 
 async function verifyUser(res, data) {
   const responseQueue = await esClient.verifyUser(indexName, data, primaryKey);
-  res.send('<p>Thanks for verifying your account. Please login <a href="https://blogosphy.herokuapp.com>Login</a>"</p>');
+  res.send('<p>Thanks for verifying your account. Please login <a href="https://blogosphy.herokuapp.com">Login</a>"</p>');
 }
 
 async function getUser(res, data) {
@@ -62,7 +62,7 @@ async function registerUser(res, data) {
         pass: 'Signin@132'
       }
     });
-    var emailURL = 'https://blogosphy.herokuapp.com/verify/' + data.verificationCode;
+    var emailURL = 'https://blogosphy.herokuapp.com/blogs/login/verify/' + data.verificationCode;
     var mailOptions = {
       from: 'reviewscan@outlook.com',
       to: data.email,

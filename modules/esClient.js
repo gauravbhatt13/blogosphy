@@ -58,7 +58,7 @@ async function updateEntity (index, entity) {
 }
 
 async function verifyUser (index, verificationCode, primaryKey) {
-  const user = await client.search({
+  const result = await client.search({
     index: index,
     body: {
       query: {
@@ -68,7 +68,8 @@ async function verifyUser (index, verificationCode, primaryKey) {
       }
     }
   });
-  if (user) {
+  if (result) {
+    var user = user._source.hits.hits[0];
     user.verified = true;
     user.verificationCode = undefined;
     const response = client.index({
