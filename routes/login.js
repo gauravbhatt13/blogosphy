@@ -55,7 +55,7 @@ async function registerUser(res, data) {
     data.verificationCode = rand;
     esClient.saveEntity(indexName, data, primaryKey);
     var transporter = nodemailer.createTransport({
-      service: 'outlook',
+      service: 'hotmail',
       auth: {
         user: 'reviewscan@outlook.com',
         pass: 'Signin@132'
