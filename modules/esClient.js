@@ -70,6 +70,7 @@ async function verifyUser (index, verificationCode, primaryKey) {
   });
   if (user) {
     user.verified = true;
+    user.verificationCode = undefined;
     const response = client.index({
       index: index,
       type: index + typeSuffix,
