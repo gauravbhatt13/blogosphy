@@ -21,13 +21,14 @@ router.post('/signin', function (req, res, next) {
   getUser(res, req.body);
 });
 
-router.post('/verify/:verificationCode', function (req, res, next) {
+router.get('/verify/:verificationCode', function (req, res, next) {
   console.log('****************verify request received*******************');
-  verifyUser(req.params.verificationCode);
+  verifyUser(res, req.params.verificationCode);
 });
 
-async function verifyUser(data) {
-  esClient.verifyUser(indexName, data, primaryKey);
+async function verifyUser(res, data) {
+  const responseQueue = await esClient.verifyUser(indexName, data, primaryKey);
+  res.send('<p>Thanks for verifying your account. Please login <a href="https://blogosphy.herokuapp.com>Login</a>"</p>');
 }
 
 async function getUser(res, data) {
