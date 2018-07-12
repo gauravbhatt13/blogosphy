@@ -201,9 +201,9 @@ async function registerUser(res, data) {
       '    .button {\n' +
       '      display: inline-block;\n' +
       '      width: 200px;\n' +
-      '      background-color: #414EF9;\n' +
+      '      background-color: #0e1321;\n' +
       '      border-radius: 3px;\n' +
-      '      color: #ffffff;\n' +
+      '      color: white;\n' +
       '      font-size: 15px;\n' +
       '      line-height: 45px;\n' +
       '      text-align: center;\n' +
