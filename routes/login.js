@@ -218,6 +218,7 @@ async function registerUser(res, data) {
       '      background-color: #FF3665;\n' +
       '    }\n' +
       '    .button--blue {\n' +
+      '      color: white;\n' +
       '      background-color: #414EF9;\n' +
       '    }\n' +
       '    /*Media Queries ------------------------------ */\n' +
@@ -242,7 +243,7 @@ async function registerUser(res, data) {
       '          <!-- Logo -->\n' +
       '          <tr>\n' +
       '            <td class="email-masthead">\n' +
-      '              <a class="email-masthead_name">Canvas</a>\n' +
+      '              <a class="email-masthead_name">Blogosphy</a>\n' +
       '            </td>\n' +
       '          </tr>\n' +
       '          <!-- Email Body -->\n' +
